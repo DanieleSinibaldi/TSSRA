@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html id="wholePage">
+    <head>
+        <meta charset="utf-8">
+        <title>TSSRA</title>
+        <link rel="stylesheet" type="text/css" href="TSSRA.css">
+        <script type="text/javascript" src="d3.min.js"></script>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td id="td1" class="firstTableTd textAlignCenter">
+                    <p>
+                        Select the folder containing the textual files that you want to analyze for the search space reduction process:
+                    </p>
+                    <input type="file" webkitdirectory="" directory="" id="input1">
+                    <br><br>
+                    <div class="myProgress">
+                        <div id="bar1" class="myBar">0.00%</div>
+                    </div>
+                    <br><br><br>
+                    <p>
+                        Insert here below the keywords for the search space reduction spaced by blank space:
+                    </p>
+                    <input type="text" id="keywords" name="keywords" placeholder="Insert here the keywords"><br><br>
+                    <button type="button" id="startButton" onclick="startSSR();">Start</button>
+                </td>
+                <td id="td2" class="firstTableTd">
+                    .
+                </td>
+                <td id="td3" class="firstTableTd textAlignCenter">
+                    <div class="yScrollable1">
+                        <p>
+                            RESULTS RANKED FOR RELEVANCE:
+                            <br>
+                            (the relevance score is the number of occurences of the keywords in the textual file)
+                        </p>
+                        <br>
+                        <div class="myProgress">
+                            <div id="bar2" class="myBar">0.00%</div>
+                        </div>
+                        <p>
+                            of the entire corpus retrieved
+                        </p>
+                        <br><br>
+                        <ol id="textualResults"></ol>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table id="table2">
+            <tr>
+                <td>
+                    <div class="yScrollable2">
+                        <p id="selectedFileContent">
+                            No textual file selected.
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    
+        <script src="TSSRA.js"></script>
+    </body>
+</html>
