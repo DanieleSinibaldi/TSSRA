@@ -195,6 +195,13 @@ function startSSR(){
     alert("Insert keywords!");
     return;
   }
+  
+  var limit = document.getElementById("nResScatter").value;
+  if(limit=="" || limit<1 || limit>100){
+    alert("Insert a number of results in the correct range!");
+    return;
+  }
+  
   var list = document.getElementById('textualResults');
   //alert("has child?"+list.hasChildNodes());
   while( list.firstChild ){
@@ -303,7 +310,8 @@ function startSSR(){
   for(let i = 0; i < filtered_txt_files_array.length; i++){
     my_keys.push(filtered_txt_files_array[i].element.name);
   }
-  var limit= 100;
+  //var limit= 100;
+  
   if(filtered_txt_files_array.length<limit){
     limit= filtered_txt_files_array.length;
   }

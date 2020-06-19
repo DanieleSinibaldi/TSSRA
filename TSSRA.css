@@ -30,13 +30,13 @@ table {
 }
 
 .yScrollable1 {
-    height: 23em;
+    height: 30em;
     overflow-y:scroll;
     overflow-x:hidden;
 }
 
 .yScrollable2 {
-    height: 23em;
+    height: 16em;
     overflow-y:scroll;
     overflow-x:hidden;
 }

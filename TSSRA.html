@@ -21,19 +21,24 @@
                     <div class="myProgress">
                         <div id="bar1" class="myBar">0.00%</div>
                     </div>
-                    <br><br><br>
+                    <br><br>
                     <p>
                         Insert here below the keywords for the search space reduction spaced by blank space:
                     </p>
-                    <input type="text" id="keywords" name="keywords" placeholder="Insert here the keywords"><br><br>
+                    <input type="text" id="keywords" name="keywords" placeholder="Insert here the keywords">
+                    <p>
+                        Insert here below the number of results that you want to see in the scatterplot (min 1 and max 100):
+                    </p>
+                    <input type="number" min="1" max="100" step="1" id="nResScatter" name="nResScatter">
+                    <br><br>
                     <button type="button" id="startButton" onclick="startSSR();">Start</button>
                 </td>
                 <td id="td2" class="firstTableTd textAlignCenter">
                     <p>
-                        Here below the first 100 results or less (if the results are less than 100) are shown in the scatterplot:
+                        Here below the chosen number of the first results (or less if the results are less) are shown in the scatterplot:
                     </p>
                     <!-- <svg width="700px" height="22.8em"></svg> -->
-                    <svg width="100%" height="19.5em"></svg>
+                    <svg width="100%" height="26.5em"></svg>
                 </td>
                 <td id="td3" class="firstTableTd textAlignCenter">
                     <div class="yScrollable1">
