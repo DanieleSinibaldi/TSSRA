@@ -306,6 +306,10 @@ function startSSR(){
   
   d3.select("svg").selectAll("*").remove();
   
+  if(filtered_txt_files_array.length==0){
+    return;
+  }
+  
   var my_keys= [];
   for(let i = 0; i < filtered_txt_files_array.length; i++){
     my_keys.push(filtered_txt_files_array[i].element.name);
