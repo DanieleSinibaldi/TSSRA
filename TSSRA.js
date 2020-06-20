@@ -226,6 +226,9 @@ function startSSR(){
     }
     //console.log(relevance_score);
     if(contains_all_keywords){
+      var characters_in_one_line= 100;
+      relevance_score= (relevance_score / (txt_files[i].text.length / characters_in_one_line)) * 100;
+      
       filtered_txt_files.enqueue(txt_files[i], relevance_score);
     }
   }
@@ -246,7 +249,7 @@ function startSSR(){
     var entry = document.createElement('li');
     entry.id= filtered_txt_file.element.name;
     //alert(entry.id);
-    entry.appendChild(document.createTextNode(""+i+". "+filtered_txt_file.element.name+" (relevance score: "+filtered_txt_file.priority+")"));
+    entry.appendChild(document.createTextNode(""+i+". "+filtered_txt_file.element.name+" (relevance score: "+filtered_txt_file.priority.toFixed(2)+")"));
     
     //____________________________________________________________________________________________________
     
@@ -358,6 +361,13 @@ function startSSR(){
     //console.log(m);
   
     points_data = mds_classic(m);
+    
+    if(filtered_txt_files_array.length == 1){
+      var res_for_1= [];
+      res_for_1.push([1,1]);
+      points_data= res_for_1;
+    }
+    
     //console.log(points_data);
   
     min_x = d3.min(points_data, function(d) {
