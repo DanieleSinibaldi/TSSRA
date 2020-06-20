@@ -138,6 +138,9 @@ class PriorityQueue {
 
 document.getElementById("startButton").disabled= true;
 
+var autoclick= false;
+var noAutoScroll= false;
+
 var nfile= 0;
 var nfile2= 0;
 var file;
@@ -253,7 +256,7 @@ function startSSR(){
     
     //____________________________________________________________________________________________________
     
-    entry.onclick= function() { 
+    entry.onclick= function() {
       var node = list.firstChild;
       while (node) {
         node.style.color = "black";
@@ -280,6 +283,18 @@ function startSSR(){
       var selected_txt_file_name= this.id;
       //alert("("+selected_txt_file_name+")");
       
+      var position_clicked_file;
+      for(let i=1; i<filtered_txt_files_array.length+1; i++){
+        if(filtered_txt_files_array[i-1].element.name == selected_txt_file_name){
+          position_clicked_file= i;
+          break;
+        }
+      }
+      if(!autoclick && position_clicked_file <= limit){
+        noAutoScroll= true;
+        document.getElementById("point of "+selected_txt_file_name).dispatchEvent(new Event('click'));
+      }
+      
       var selected_txt_file;
       for(let i = 0; i < txt_files.length; i++){
         if(txt_files[i].name == selected_txt_file_name){
@@ -287,6 +302,8 @@ function startSSR(){
         }
       }
       document.getElementById("selectedFileContent").innerHTML= "FILE NAME: "+selected_txt_file.name+"<br><br>CONTENT:<br><br>"+selected_txt_file.text;
+      
+      autoclick= false;
     };
     
     //____________________________________________________________________________________________________
@@ -430,6 +447,7 @@ function startSSR(){
   
     enter_points = points.enter().append('g').attr({
       "class": 'point',
+      "id": function(d, i) { return "point of "+keys[i]; },
       transform: function(d) {
         return "translate(" + (x(d[0])) + "," + (y(d[1])) + ")";
       }
@@ -476,7 +494,14 @@ function startSSR(){
       }
     });
   
-    enter_points.on('click', function(d) {
+    //console.log(enter_points);
+    enter_points.on('click', function(d, i) {
+      autoclick= true;
+      if(!noAutoScroll){
+        document.getElementById(keys[i]).scrollIntoView();
+      }
+      noAutoScroll= false;
+      document.getElementById(keys[i]).dispatchEvent(new Event('click'));
       links.classed('visible', function(l) {
         return l.source === d;
       });
