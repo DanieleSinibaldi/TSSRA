@@ -1,5 +1,6 @@
 table {
-    width: 100%;
+    //width: 100%;
+    width: 89.6em;
 }
 
 #table2 {
@@ -22,17 +23,24 @@ table {
 
 #td3 {
     width: 40%;
-    //padding-left: 20px;
 }
 
 #td21 {
     width: 33%;
-    padding-left: 20px;
 }
 
 #td22 {
     width: 67%;
-    padding-left: 20px;
+}
+
+#selectedFileContent{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#textualResultsContainer{
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .textAlignCenter {
@@ -40,15 +48,17 @@ table {
 }
 
 .yScrollable1 {
-    height: 30em;
+    height: 20em;
+    width: 28.8em;
     overflow-y:scroll;
-    overflow-x:hidden;
+    overflow-x:scroll;
 }
 
 .yScrollable2 {
     height: 20em;
+    width: 60em;
     overflow-y:scroll;
-    overflow-x:hidden;
+    overflow-x:scroll;
 }
 
 //#textualResults li:nth-of-type(1n+10000) {

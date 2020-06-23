@@ -58,21 +58,23 @@
         <table>
             <tr>
                 <td id="td21" class="firstTableTd textAlignCenter">
-                    <div class="yScrollable2">
-                        <p>
-                            RESULTS RANKED FOR RELEVANCE:
+                    <div class="yScrollable1">
+                        <div id="textualResultsContainer">
+                            <p>
+                                RESULTS RANKED FOR RELEVANCE:
+                                <br>
+                                (example: a file will have a score around 100 if in each of its lines, i.e. about 100 characters, there is more or less one of the keywords)
+                            </p>
                             <br>
-                            (example: a file will have a score around 100 if in each of its lines, i.e. about 100 characters, there is more or less one of the keywords)
-                        </p>
-                        <br>
-                        <div class="myProgress">
-                            <div id="bar2" class="myBar">0.00%</div>
+                            <div class="myProgress">
+                                <div id="bar2" class="myBar">0.00%</div>
+                            </div>
+                            <p>
+                                of the entire corpus retrieved
+                            </p>
+                            <br><br>
+                            <ol id="textualResults"></ol>
                         </div>
-                        <p>
-                            of the entire corpus retrieved
-                        </p>
-                        <br><br>
-                        <ol id="textualResults"></ol>
                     </div>
                 </td>
                 <td id="td22" class="firstTableTd">
