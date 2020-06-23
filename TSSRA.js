@@ -529,12 +529,28 @@ function startSSR(){
       }
       autoclick5= false;
       autoclick3= false;
+      
+      d3.select("svg").selectAll("#selected_point_scatterplot_1").remove();
+      enter_points = points.enter().append('g').attr({
+        "class": 'point',
+        "id": "selected_point_scatterplot_1",
+        transform: "translate(" + (x(d[0])) + "," + (y(d[1])) + ")"
+      });
+    
+      enter_points.append('circle').attr({
+        r: 6,
+        opacity: 0.3,
+        fill: "blue"
+      });
+      enter_points.append('title').text(keys[i]);
+      
       links.classed('visible', function(l) {
         return l.source === d;
       });
       return indicators.classed('visible', function(l) {
         return l.source === d;
       });
+    
     });
   
   }).call(this);
@@ -737,7 +753,7 @@ function startSSR(){
     });
   
     enter_points.append('title').text(function(d, i) {
-      return "length: " + (-d[0]) + ", score: " + (-d[1]).toFixed(2);
+      return "" + keys[i] + " (length: " + (-d[0]) + ", score: " + (-d[1]).toFixed(2) + ")";
     });
   
     indicators = svg.selectAll('.indicator').data(links_data);
@@ -777,12 +793,29 @@ function startSSR(){
       }
       autoclick6= false;
       autoclick4= false;
-      links.classed('visible', function(l) {
+      /*links.classed('visible', function(l) {
         return l.source === d;
       });
       return indicators.classed('visible', function(l) {
         return l.source === d;
+      });*/
+      
+      //console.log(d);
+      //console.log(d3.select("svg").selectAll("#selected_point_scatterplot_2"));
+      d3.select("#svg2").selectAll("#selected_point_scatterplot_2").remove();
+      enter_points = points.enter().append('g').attr({
+        "class": 'point',
+        "id": "selected_point_scatterplot_2",
+        transform: "translate(" + (x(d[0])) + "," + (y(d[1])) + ")"
       });
+    
+      enter_points.append('circle').attr({
+        r: 6,
+        opacity: 0.3,
+        fill: "blue"
+      });
+      enter_points.append('title').text("" + keys[i] + " (length: " + (-d[0]) + ", score: " + (-d[1]).toFixed(2) + ")");
+      
     });
   
   }).call(this);

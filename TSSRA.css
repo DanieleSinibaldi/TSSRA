@@ -91,7 +91,7 @@ table {
 
 svg {
   //background: #E6DFCC;
-  background: #ccffcc;
+  //background: #ccffcc;
 }
 .point {
   fill: teal;
@@ -109,7 +109,8 @@ svg {
 }
 
 .link, .indicator {
-  stroke: white;
+  //stroke: white;
+  stroke: red;
   fill: none;
   visibility: hidden;
   pointer-events: none;
