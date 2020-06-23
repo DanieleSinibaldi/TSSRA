@@ -544,6 +544,62 @@ function startSSR(){
   
   d3.select("#svg2").selectAll("*").remove();
   
+  d3.select("#svg2").append("svg:defs").append("svg:marker")
+    .attr("id", "triangle")
+    .attr("refX", 6)
+    .attr("refY", 6)
+    .attr("markerWidth", 30)
+    .attr("markerHeight", 30)
+    .attr("markerUnits","userSpaceOnUse")
+    .attr("orient", "auto")
+    .append("path")
+    .attr("d", "M 0 0 12 6 0 12 3 6")
+    .style("fill", "black");
+    
+  d3.select("#svg2").append("line")
+            .attr("x1",  10)
+            .attr("y1", 280)
+            .attr("x2", 550)
+            .attr("y2", 280)
+
+            .attr("stroke-width", 1)
+            .attr("stroke", "black")
+            .attr("marker-end", "url(#triangle)");
+            
+  d3.select("#svg2").append("text")
+            .attr("x", 510)
+            .attr("y", 270)
+            .text("length")
+            .attr("font-size", 15);
+            
+  d3.select("#svg2").append("svg:defs").append("svg:marker")
+    .attr("id", "triangle2")
+    .attr("refX", 6)
+    .attr("refY", 6)
+    .attr("markerWidth", 30)
+    .attr("markerHeight", 30)
+    .attr("markerUnits","userSpaceOnUse")
+    .attr("orient", "auto")
+    .append("path")
+    .attr("d", "M 0 0 12 6 0 12 3 6")
+    .style("fill", "black");
+    
+  d3.select("#svg2").append("line")
+            .attr("x1",  10)
+            .attr("y1", 280)
+            .attr("x2",  10)
+            .attr("y2",  15)
+
+            .attr("stroke-width", 1)
+            .attr("stroke", "black")
+            .attr("marker-end", "url(#triangle2)");
+            
+  d3.select("#svg2").append("text")
+            .attr("x", 20)
+            .attr("y", 15)
+            .text("score")
+            .attr("font-size", 15);
+  
   if(filtered_txt_files_array.length==0){
     return;
   }
