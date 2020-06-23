@@ -140,6 +140,14 @@ document.getElementById("startButton").disabled= true;
 
 var autoclick= false;
 var noAutoScroll= false;
+var autoclick2= false;
+var noAutoScroll2= false;
+var autoclick3= false;
+var autoclick4= false;
+var autoclick5= false;
+var autoclick6= false;
+
+var characters_in_one_line= 100;
 
 var nfile= 0;
 var nfile2= 0;
@@ -229,7 +237,7 @@ function startSSR(){
     }
     //console.log(relevance_score);
     if(contains_all_keywords){
-      var characters_in_one_line= 100;
+      //var characters_in_one_line= 100;
       relevance_score= (relevance_score / (txt_files[i].text.length / characters_in_one_line)) * 100;
       
       filtered_txt_files.enqueue(txt_files[i], relevance_score);
@@ -290,10 +298,19 @@ function startSSR(){
           break;
         }
       }
-      if(!autoclick && position_clicked_file <= limit){
+      autoclick5= true;
+      autoclick6= true;
+      //console.log(autoclick+" + "+autoclick2);
+      if(!autoclick && !autoclick2 && position_clicked_file <= limit){
         noAutoScroll= true;
+        noAutoScroll2= true;
         document.getElementById("point of "+selected_txt_file_name).dispatchEvent(new Event('click'));
+        document.getElementById("2 point of "+selected_txt_file_name).dispatchEvent(new Event('click'));
       }
+      /*if(!autoclick2 && position_clicked_file <= limit){
+        noAutoScroll2= true;
+        document.getElementById("2 point of "+selected_txt_file_name).dispatchEvent(new Event('click'));
+      }*/
       
       var selected_txt_file;
       for(let i = 0; i < txt_files.length; i++){
@@ -304,6 +321,7 @@ function startSSR(){
       document.getElementById("selectedFileContent").innerHTML= "FILE NAME: "+selected_txt_file.name+"<br><br>CONTENT:<br><br>"+selected_txt_file.text;
       
       autoclick= false;
+      autoclick2= false;
     };
     
     //____________________________________________________________________________________________________
@@ -470,7 +488,8 @@ function startSSR(){
     });
   
     enter_points.append('title').text(function(d, i) {
-      return d[0] + ", " + d[1];
+      //return d[0] + ", " + d[1];
+      return keys[i];
     });
   
     indicators = svg.selectAll('.indicator').data(links_data);
@@ -497,11 +516,211 @@ function startSSR(){
     //console.log(enter_points);
     enter_points.on('click', function(d, i) {
       autoclick= true;
+      autoclick3= true;
       if(!noAutoScroll){
         document.getElementById(keys[i]).scrollIntoView();
       }
       noAutoScroll= false;
-      document.getElementById(keys[i]).dispatchEvent(new Event('click'));
+      if(!autoclick5){
+        if(!autoclick4){
+          document.getElementById("2 point of "+keys[i]).dispatchEvent(new Event('click'));
+        }
+        document.getElementById(keys[i]).dispatchEvent(new Event('click'));
+      }
+      autoclick5= false;
+      autoclick3= false;
+      links.classed('visible', function(l) {
+        return l.source === d;
+      });
+      return indicators.classed('visible', function(l) {
+        return l.source === d;
+      });
+    });
+  
+  }).call(this);
+  
+  //_________________________________________________________________________________________________________
+  // second scatterplot
+  
+  d3.select("#svg2").selectAll("*").remove();
+  
+  if(filtered_txt_files_array.length==0){
+    return;
+  }
+  
+  var my_keys= [];
+  for(let i = 0; i < filtered_txt_files_array.length; i++){
+    my_keys.push(filtered_txt_files_array[i].element.name);
+  }
+  //var limit= 100;
+  
+  if(filtered_txt_files_array.length<limit){
+    limit= filtered_txt_files_array.length;
+  }
+  //console.log(limit);
+  var my_m = [];
+  for(let i=0; i<limit; i++) { //filtered_txt_files_array.length; i++) {
+      my_m[i] = [-filtered_txt_files_array[i].element.text.length, -filtered_txt_files_array[i].priority];
+      //my_m[i] = [-filtered_txt_files_array[i].element.text.length, ((-filtered_txt_files_array[i].priority/100)*(filtered_txt_files_array[i].element.text.length/characters_in_one_line)).toFixed(0)];
+      
+  }
+  
+  
+  (function() {
+    var MARGIN, enter_points, height, indicators, keys, links, links_data, m, max_x, max_y, min_x, min_y, points, points_data, svg, width, x, y;
+  
+    MARGIN = 100;
+  
+    svg = d3.select('#svg2');
+  
+    width = svg.node().getBoundingClientRect().width;
+  
+    height = svg.node().getBoundingClientRect().height;
+    
+    //console.log(my_keys);
+    //console.log(my_m);
+  
+    //keys = ["Atlanta", "Chicago", "Denver", "Houston", "Los Angeles", "Miami", "New York", "San Francisco", "Seattle", "Washington, DC"];
+    keys = my_keys;
+  
+    //m = [[0, 587, 1212, 701, 1936, 604, 748, 2139, 2182, 543], [587, 0, 920, 940, 1745, 1188, 713, 1858, 1737, 597], [1212, 920, 0, 879, 831, 1726, 1631, 949, 1021, 1494], [701, 940, 879, 0, 1374, 968, 1420, 1645, 1891, 1220], [1936, 1745, 831, 1374, 0, 2339, 2451, 347, 959, 2300], [604, 1188, 1726, 968, 2339, 0, 1092, 2594, 2734, 923], [748, 713, 1631, 1420, 2451, 1092, 0, 2571, 2408, 205], [2139, 1858, 949, 1645, 347, 2594, 2571, 0, 678, 2442], [2182, 1737, 1021, 1891, 959, 2734, 2408, 678, 0, 2329], [543, 597, 1494, 1220, 2300, 923, 205, 2442, 2329, 0]];
+    m= my_m;
+    //console.log(m);
+  
+    points_data = m; // mds_classic(m);
+    //console.log(points_data);
+    
+    if(filtered_txt_files_array.length == 1){
+      var res_for_1= [];
+      res_for_1.push([1,1]);
+      points_data= res_for_1;
+    }
+    
+    //console.log(points_data);
+  
+    min_x = d3.min(points_data, function(d) {
+      return d[0];
+    });
+  
+    max_x = d3.max(points_data, function(d) {
+      return d[0];
+    });
+  
+    min_y = d3.min(points_data, function(d) {
+      return d[1];
+    });
+  
+    max_y = d3.max(points_data, function(d) {
+      return d[1];
+    });
+  
+    x = d3.scale.linear().domain([max_x, min_x]).range([MARGIN, width - MARGIN]);
+  
+    y = d3.scale.linear().domain([min_y, max_y]).range([MARGIN, height - MARGIN]);
+  
+    links_data = [];
+  
+    points_data.forEach(function(p1, i1) {
+      var array;
+      array = [];
+      points_data.forEach(function(p2, i2) {
+        if (i1 !== i2) {
+          return array.push({
+            source: p1,
+            target: p2,
+            dist: m[i1][i2]
+          });
+        }
+      });
+      return links_data = links_data.concat(array);
+    });
+    //console.log(links_data);
+  
+    links = svg.selectAll('.link').data(links_data);
+  
+    links.enter().append('line').attr({
+      "class": 'link',
+      x1: function(d) {
+        return x(d.source[0]);
+      },
+      y1: function(d) {
+        return y(d.source[1]);
+      },
+      x2: function(d) {
+        return x(d.target[0]);
+      },
+      y2: function(d) {
+        return y(d.target[1]);
+      }
+    });
+  
+    points = svg.selectAll('.point').data(points_data);
+  
+    enter_points = points.enter().append('g').attr({
+      "class": 'point',
+      "id": function(d, i) { return "2 point of "+keys[i]; },
+      transform: function(d) {
+        return "translate(" + (x(d[0])) + "," + (y(d[1])) + ")";
+      }
+    });
+  
+    enter_points.append('circle').attr({
+      r: 6,
+      opacity: 0.3
+    });
+  
+    enter_points.append('circle').attr({
+      r: 4
+    });
+  
+    enter_points.append('text').text(function(d, i) {
+      return keys[i];
+    }).attr({
+      y: 12,
+      dy: '0.35em'
+    });
+  
+    enter_points.append('title').text(function(d, i) {
+      return "length: " + (-d[0]) + ", score: " + (-d[1]).toFixed(2);
+    });
+  
+    indicators = svg.selectAll('.indicator').data(links_data);
+  
+    indicators.enter().append('circle').attr({
+      "class": 'indicator',
+      r: 5,
+      cx: function(d) {
+        var mul;
+        //mul = d.dist / Math.sqrt(Math.pow(d.target[1] - d.source[1], 2) + Math.pow(d.target[0] - d.source[0], 2));
+        mul=1;
+        //console.log("cx "+mul);
+        return x(d.source[0]) + mul * (x(d.target[0]) - x(d.source[0]));
+      },
+      cy: function(d) {
+        var mul;
+        //mul = d.dist / Math.sqrt(Math.pow(d.target[1] - d.source[1], 2) + Math.pow(d.target[0] - d.source[0], 2));
+        mul=1;
+        //console.log("cy "+mul);
+        return y(d.source[1]) + mul * (y(d.target[1]) - y(d.source[1]));
+      }
+    });
+  
+    //console.log(enter_points);
+    enter_points.on('click', function(d, i) {
+      autoclick2= true;
+      autoclick4= true;
+      if(!noAutoScroll2){
+        document.getElementById(keys[i]).scrollIntoView();
+      }
+      noAutoScroll2= false;
+      if(!autoclick6){
+        if(!autoclick3){
+          document.getElementById("point of "+keys[i]).dispatchEvent(new Event('click'));
+        }
+        document.getElementById(keys[i]).dispatchEvent(new Event('click'));
+      }
+      autoclick6= false;
+      autoclick4= false;
       links.classed('visible', function(l) {
         return l.source === d;
       });
