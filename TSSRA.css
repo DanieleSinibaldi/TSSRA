@@ -1,10 +1,19 @@
+body {
+  background: #99ddff;
+}
+
 table {
     //width: 100%;
     width: 89.6em;
+    background: #99ddff;
 }
 
 #table2 {
     border: 1px solid black;
+}
+
+td {
+  background: white;
 }
 
 .firstTableTd {
