@@ -345,6 +345,8 @@ function startSSR(){
   d3.select("svg").selectAll("*").remove();
   
   if(filtered_txt_files_array.length==0){
+    d3.select("#svg2").selectAll("*").remove();
+    alert("No result found!");
     return;
   }
   
